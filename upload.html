@@ -1,0 +1,16 @@
+<html>
+<body>
+
+<form enctype="multipart/form-data" action="upload_file.php" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+    Upload this file: <input name="file" type="file" />
+	<br/><br/><br/>
+	Protection mode:
+	<input type="radio" name="protected" value="on">On
+	<input type="radio" name="protected" value="off" checked="true">Off
+	<br/><br/><br/>
+    <input type="submit" value="Upload File" />
+</form>
+
+</body>
+</html>
