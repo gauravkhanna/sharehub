@@ -43,8 +43,9 @@ $pword=sha1($pword);
 $SQL = "INSERT INTO useraccounts (username, password, emailid) VALUES ('$uname','$pword', '$umail')";
 $result = mysql_query($SQL);
 if($result) {
-$SQL = "SELECT * FROM useraccounts WHERE username = '$uname'";
-$uid = mysql_query($SQL);
+$SQL = "SELECT userid FROM useraccounts WHERE username = '$uname'";
+$result = mysql_query($SQL);
+$uid= mysql_result($result,0);
 mkdir("upload/$uid");
 echo "you have successfully registered. Click <a href='index.php'>here</a> to ontinue";
 }
