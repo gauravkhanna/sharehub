@@ -1,4 +1,5 @@
 <?php
+session_start();
 $uname = $_POST['usernm'];
 $pword = $_POST['pswd'];
 $uLength = strlen($uname);
@@ -36,6 +37,9 @@ else {
 //move to home page
 $sessid=session_regenerate_id();//create session
 $_SESSION['sessionid']=$sessid;
+$SQL = "UPDATE useraccounts SET 'sessionid'='$sessid' WHERE username='$uname'";
+$result = mysql_query($SQL);
+//echo $sessid;
 header("Location: myfiles.php");
 }
 }

@@ -10,6 +10,7 @@ if ($db_found) {
 $SQL = "SELECT * FROM userfiles WHERE userid = '1'";// chnge for current user fetched from  session
 $result = mysql_query($SQL);
 $num_rows = mysql_num_rows($result);
+echo("<a href=\"logout.php\">Sign out</a>");
 if($num_rows>0) {
 echo("You can upload one by clicking <a href=\"upload.html\">here</a><br/>");
 echo("<table width=\"1000\"><th>Filename</th><th>Extension</th><th>Upload date</th><th>Last updated</th><th>Protection</th><th>Check log</th>");

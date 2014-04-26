@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['sessionid']))
+if(!isset($_COOKIE['sharehub_phpsession']))
 {
 echo"<html>";
 echo"<head>";
