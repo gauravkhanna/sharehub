@@ -1,4 +1,6 @@
 <?php
+$random=rand(10000,999999);
+session_id((string)$random);
 session_start();
 $uname = $_POST['usernm'];
 $pword = $_POST['pswd'];
@@ -35,11 +37,10 @@ echo "<h3>incorrect password</h3>";
 else {
 //echo "<h3>logged in</h3>";
 //move to home page
-$sessid=session_regenerate_id();//create session
-$_SESSION['sessionid']=$sessid;
-$SQL = "UPDATE useraccounts SET 'sessionid'='$sessid' WHERE username='$uname'";
+$sessid=session_id();
+$SQL = "UPDATE useraccounts SET sessionid='$sessid' WHERE username='$uname'";
 $result = mysql_query($SQL);
-//echo $sessid;
+setcookie("sharehub_phpsession",$sessid,time()+86400);
 header("Location: myfiles.php");
 }
 }

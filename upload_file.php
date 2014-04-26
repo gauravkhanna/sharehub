@@ -1,4 +1,5 @@
 <?php
+if(isset($_COOKIE['sharehub_phpsession']))	{
 $prot=$_POST["protected"];
 $allowedExts = array("gif", "jpeg", "jpg", "png");
 $temp = explode(".", $_FILES["file"]["name"]);
@@ -43,8 +44,12 @@ if ((($_FILES["file"]["type"] == "image/gif")
 		$db_found = mysql_select_db($database, $db_handle);
 		if ($db_found) 
 			{
+			$sessid=$_COOKIE['sharehub_phpsession'];
+			$SQL = "SELECT userid FROM useraccounts WHERE sessionid = '$sessid'";// changed for current user fetched from  session
+			$result = mysql_query($SQL);
+			$userid=mysql_result($result,0);
 			$date=date('Y-m-d H:i:s');
-			$SQL = "INSERT INTO userfiles (userid, filename, logid,createddate,updatedate) VALUES ('1','$filename','1','$date','$date')";
+			$SQL = "INSERT INTO userfiles (userid, filename, logid,createddate,updatedate) VALUES ('$userid','$filename','1','$date','$date')";
 			$result = mysql_query($SQL);
 			if($result)
 				echo "you have successfully uploaded. Click <a href='upload.html'>here</a> to ontinue";
@@ -59,4 +64,10 @@ else
   {
   echo "Invalid file";
   }
+ }
+ 
+ else
+ {
+ header("Location: index.php");
+ }
 ?>

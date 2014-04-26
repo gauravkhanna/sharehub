@@ -1,4 +1,6 @@
 <?php
+if(!isset($_COOKIE['sharehub_phpsession']))
+{
 $uname = $_POST['usernm'];
 $pword = $_POST['pswd'];
 $umail = $_POST['emailid'];
@@ -57,5 +59,10 @@ mysql_close($db_handle);
 }
 else {
 echo "<h3>".$errorMessage."</h3>";
+}
+}
+else
+{
+header("Location: myfiles.php");
 }
 ?>

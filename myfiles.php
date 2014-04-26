@@ -1,5 +1,7 @@
 <?php
 // show files list
+if(isset($_COOKIE['sharehub_phpsession']))
+{
 $db_username = "root";
 $db_password = "123456";
 $database = "sharehub";
@@ -7,7 +9,11 @@ $server = "127.0.0.1";
 $db_handle = mysql_connect($server, $db_username, $db_password);
 $db_found = mysql_select_db($database, $db_handle);
 if ($db_found) {
-$SQL = "SELECT * FROM userfiles WHERE userid = '1'";// chnge for current user fetched from  session
+$sessid=$_COOKIE['sharehub_phpsession'];
+$SQL = "SELECT userid FROM useraccounts WHERE sessionid = '$sessid'";// changed for current user fetched from  session
+$result = mysql_query($SQL);
+$userid=mysql_result($result,0);
+$SQL = "SELECT * FROM userfiles WHERE userid = '$userid'";
 $result = mysql_query($SQL);
 $num_rows = mysql_num_rows($result);
 echo("<a href=\"logout.php\">Sign out</a>");
@@ -31,5 +37,10 @@ else{
 echo("You have not uploaded any files");
 echo("You can upload one by clicking <a href=\"upload.html\">here</a>");
 }
+}
+}
+else
+{
+header("Location: index.php");
 }
 ?>
