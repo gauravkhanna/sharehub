@@ -28,7 +28,7 @@ echo("<td>$tuple->filetype</td>");
 echo("<td>$tuple->createddate</td>");
 echo("<td>$tuple->updatedate</td>");
 echo("<td>$tuple->storagetype</td>");
-echo("<td><a href=\"log.php\">Log</a></td>");
+echo("<td><form action=\"log.php\" method=\"POST\"><input type=\"hidden\" name=\"logid\" value=\"$tuple->logid\"><input type=\"submit\" value=\"See log\"></form></td>");
 echo("</tr>");
 }
 echo("</table>");

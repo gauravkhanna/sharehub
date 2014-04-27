@@ -36,7 +36,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
 		$result = mysql_query($SQL);
 		$userid=mysql_result($result,0);
 		$date=date('Y-m-d H:i:s');
-		$SQL1="INSERT INTO logfiles (userid,updatedate,description) VALUES ('$userid','$date','')";
+		$SQL1="INSERT INTO logfiles (userid,updatedate,description) VALUES ('$userid','$date','File created')";
 		$result1=mysql_query($SQL1);
 		if(result1){
 			$SQL2="SELECT logid from logfiles WHERE updatedate='$date'";
