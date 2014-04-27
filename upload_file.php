@@ -26,7 +26,6 @@ if ((($_FILES["file"]["type"] == "image/gif")
 	$server = "127.0.0.1";
 	$db_handle = mysql_connect($server, $db_username, $db_password);	  
 	$db_found = mysql_select_db($database, $db_handle);
-	$userid=0;
 	if ($db_found) 
 		{
 		$filename=$_FILES["file"]["name"];
@@ -37,27 +36,34 @@ if ((($_FILES["file"]["type"] == "image/gif")
 		$result = mysql_query($SQL);
 		$userid=mysql_result($result,0);
 		$date=date('Y-m-d H:i:s');
-		$protType=$_POST['protected'];
-		$SQL = "INSERT INTO userfiles (userid, filename,filetype,storagetype,logid,createddate,updatedate) VALUES ('$userid','$fname','$ftype','$protType','1','$date','$date')";
-		$result = mysql_query($SQL);
-		if($result) {
-			//echo "you have successfully uploaded. Click <a href='upload.html'>here</a> to continue";
-			if (file_exists("upload/$userid/" . $_FILES["file"]["name"])) {
-				echo $_FILES["file"]["name"] . " already exists. ";
+		$SQL1="INSERT INTO logfiles (userid,updatedate,description) VALUES ('$userid','$date','')";
+		$result1=mysql_query($SQL1);
+		if(result1){
+			$SQL2="SELECT logid from logfiles WHERE updatedate='$date'";
+			$result2=mysql_query($SQL2);
+			$logid = mysql_result($result2,0);
+			$protType=$_POST['protected'];
+			$SQL = "INSERT INTO userfiles (userid, filename,filetype,storagetype,logid,createddate,updatedate) VALUES ('$userid','$fname','$ftype','$protType','$logid','$date','$date')";
+			$result = mysql_query($SQL);
+			if($result) {
+				//echo "you have successfully uploaded. Click <a href='upload.html'>here</a> to continue";
+				if (file_exists("upload/$userid/" . $_FILES["file"]["name"])) {
+					echo $_FILES["file"]["name"] . " already exists. ";
+					}
+				else {
+					move_uploaded_file($_FILES["file"]["tmp_name"],"upload/$userid/" . $_FILES["file"]["name"]);
+					//echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+					//echo "Type: " . $_FILES["file"]["type"] . "<br>";
+					//echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+					//echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br>";
+					//echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
+					//echo "Protection mode: ".$prot;
+					//
+					//echo $filename;
+					//echo pathinfo($filename,PATHINFO_FILENAME);
+					}
 				}
-			else {
-				move_uploaded_file($_FILES["file"]["tmp_name"],"upload/$userid/" . $_FILES["file"]["name"]);
-				//echo "Upload: " . $_FILES["file"]["name"] . "<br>";
-				//echo "Type: " . $_FILES["file"]["type"] . "<br>";
-				//echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
-				//echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br>";
-				//echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
-				//echo "Protection mode: ".$prot;
-				//
-				//echo $filename;
-				//echo pathinfo($filename,PATHINFO_FILENAME);
-				}
-			}
+		}
 		else
 			echo "error: ".mysql_error();
 		mysql_close($db_handle);
