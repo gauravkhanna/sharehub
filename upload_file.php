@@ -1,6 +1,7 @@
 <?php
 if(isset($_COOKIE['sharehub_phpsession']))	
 {
+$sessid=$_COOKIE['sharehub_phpsession'];
 $prot=$_POST["protected"];
 $allowedExts = array("gif", "jpeg", "jpg", "png");
 $temp = explode(".", $_FILES["file"]["name"]);
@@ -60,7 +61,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
 					$SQL3="SELECT fileid from userfiles WHERE logid='$logid'";
 					$result3=mysql_query($SQL3);
 					$fileid = mysql_result($result3,0);
-					$SQL4 = "UPDATE userfiles SET url='upload/$userid/$fileid' WHERE fileid='$fileid'";
+					$SQL4 = "UPDATE userfiles SET url='upload/$userid/$fileid/$filename' WHERE fileid='$fileid'";
 					$result4 = mysql_query($SQL4);
 					move_uploaded_file($_FILES["file"]["tmp_name"],"upload/$userid/" . $_FILES["file"]["name"]);
 					//echo "Upload: " . $_FILES["file"]["name"] . "<br>";
