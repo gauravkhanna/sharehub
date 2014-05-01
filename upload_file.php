@@ -43,7 +43,11 @@ if ((($_FILES["file"]["type"] == "image/gif")
 			$result2=mysql_query($SQL2);
 			$logid = mysql_result($result2,0);
 			$protType=$_POST['protected'];
-			$SQL = "INSERT INTO userfiles (userid, filename,filetype,storagetype,logid,createddate,updatedate) VALUES ('$userid','$fname','$ftype','$protType','$logid','$date','$date')";
+			if($protType=='on')
+				$pType=0;
+			else
+				$pType=1;
+			$SQL = "INSERT INTO userfiles (userid, filename,filetype,storagetype,logid,createddate,updatedate) VALUES ('$userid','$fname','$ftype','$pType','$logid','$date','$date')";
 			$result = mysql_query($SQL);
 			if($result) {
 				//echo "you have successfully uploaded. Click <a href='upload.html'>here</a> to continue";
