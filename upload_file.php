@@ -60,9 +60,9 @@ if ((($_FILES["file"]["type"] == "image/gif")
 					$SQL3="SELECT fileid from userfiles WHERE logid='$logid'";
 					$result3=mysql_query($SQL3);
 					$fileid = mysql_result($result3,0);
-					$SQL4 = "UPDATE userfiles SET url='\upload\$userid\$fileid' WHERE fileid='$fileid'";
+					$SQL4 = "UPDATE userfiles SET url='upload/$userid/$fileid' WHERE fileid='$fileid'";
 					$result4 = mysql_query($SQL4);
-					move_uploaded_file($_FILES["file"]["tmp_name"],"upload//$userid//" . $_FILES["file"]["name"]);
+					move_uploaded_file($_FILES["file"]["tmp_name"],"upload/$userid/" . $_FILES["file"]["name"]);
 					//echo "Upload: " . $_FILES["file"]["name"] . "<br>";
 					//echo "Type: " . $_FILES["file"]["type"] . "<br>";
 					//echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
